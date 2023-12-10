@@ -18,10 +18,15 @@ func AnswerPart2(lines []string) int {
 		graph[cardNum] = connections
 	}
 
-	// dfs from every node in graph and count num nodes visited
+	// init cache with -1
+	cache := make([]int, len(graph)+1)
+	for idx := range cache {
+		cache[idx] = -1
+	}
+	// dfs from every node in graph and count num nodes visited (cache visited nodes)
 	nodesVisited := 0
 	for currentNode, _ := range graph {
-		nodesVisited += dfs(graph, currentNode)
+		nodesVisited += dfs(graph, currentNode, cache)
 	}
 
 	return nodesVisited
@@ -61,10 +66,15 @@ func getCardNumAndNumMatches(line string) (int, int) {
 	return cardNum, numMatches
 }
 
-func dfs(graph map[int][]int, currentNode int) int {
+func dfs(graph map[int][]int, currentNode int, cache []int) int {
+	if cache[currentNode] != -1 {
+		return cache[currentNode]
+	}
+
 	sumVisits := 1
 	for _, neighbor := range graph[currentNode] {
-		sumVisits += dfs(graph, neighbor)
+		sumVisits += dfs(graph, neighbor, cache)
 	}
+	cache[currentNode] = sumVisits
 	return sumVisits
 }
