@@ -14,4 +14,5 @@ func main() {
 
 	fmt.Printf("Part 1: %d\n", AnswerPart1(lines))
 	fmt.Printf("Part 2: %d\n", AnswerPart2(lines))
+	fmt.Printf("Part 2 (2): %d\n", AnswerPart2_2(lines))
 }
